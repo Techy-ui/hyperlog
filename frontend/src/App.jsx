@@ -110,11 +110,27 @@ function App() {
   const [inlineImageUrl, setInlineImageUrl] = useState('');
 
   // Handle Local Cache Setup Checks
+  // Handle Session Initialization
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setCurrentUser(JSON.parse(savedUser));
+    // Check if this is the first time the page is loaded in this tab
+    const isFirstLoad = !sessionStorage.getItem('initialized');
+    
+    if (isFirstLoad) {
+      // It's a fresh landing, clear the persistence to force a clean guest start
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      setCurrentUser(null);
+      
+      // Mark this session as initialized so future refreshes keep the user logged in
+      sessionStorage.setItem('initialized', 'true');
+    } else {
+      // If the user refreshed or navigated, restore the user from localStorage
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        setCurrentUser(JSON.parse(savedUser));
+      }
     }
+    
     fetchLiveDbData();
   }, []);
 
