@@ -110,29 +110,23 @@ function App() {
   const [inlineImageUrl, setInlineImageUrl] = useState('');
 
  
-  // Handle Session Initialization & Forced Redirect
+  // In App.jsx
   useEffect(() => {
     const isFirstLoad = !sessionStorage.getItem('initialized');
     
     if (isFirstLoad) {
-      // 1. Clear session for a clean guest start
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       setCurrentUser(null);
-      
-      // 2. Mark session as initialized
       sessionStorage.setItem('initialized', 'true');
       
-      // 3. Force navigate to home
+      // Use an empty string or '/' for HashRouter
       navigate('/', { replace: true });
     } else {
-      // Return visit/refresh: restore session
-      const savedUser = localStorage.getItem('user');
-      if (savedUser) setCurrentUser(JSON.parse(savedUser));
+      // ...
     }
-    
-    fetchLiveDbData();
-  }, [navigate]); // Add navigate to dependency array
+    setIsReady(true);
+  }, [navigate]);
 
   // Deduplication engine strips out repeating DB responses seamlessly
   const fetchLiveDbData = async () => {
