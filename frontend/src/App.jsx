@@ -109,30 +109,31 @@ function App() {
   const [coverImageUrl, setCoverImageUrl] = useState('');
   const [inlineImageUrl, setInlineImageUrl] = useState('');
 
-  // Handle Local Cache Setup Checks
-  // Handle Session Initialization
+  const navigate = useNavigate(); // Ensure you have this declared at the top of your App function
+
+  // Handle Session Initialization & Forced Redirect
   useEffect(() => {
-    // Check if this is the first time the page is loaded in this tab
     const isFirstLoad = !sessionStorage.getItem('initialized');
     
     if (isFirstLoad) {
-      // It's a fresh landing, clear the persistence to force a clean guest start
+      // 1. Clear session for a clean guest start
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       setCurrentUser(null);
       
-      // Mark this session as initialized so future refreshes keep the user logged in
+      // 2. Mark session as initialized
       sessionStorage.setItem('initialized', 'true');
+      
+      // 3. Force navigate to home
+      navigate('/', { replace: true });
     } else {
-      // If the user refreshed or navigated, restore the user from localStorage
+      // Return visit/refresh: restore session
       const savedUser = localStorage.getItem('user');
-      if (savedUser) {
-        setCurrentUser(JSON.parse(savedUser));
-      }
+      if (savedUser) setCurrentUser(JSON.parse(savedUser));
     }
     
     fetchLiveDbData();
-  }, []);
+  }, [navigate]); // Add navigate to dependency array
 
   // Deduplication engine strips out repeating DB responses seamlessly
   const fetchLiveDbData = async () => {
