@@ -112,7 +112,26 @@ function App() {
   const [inlineImageUrl, setInlineImageUrl] = useState('');
 
  
-  // In App.jsx
+  const fetchLiveDbData = async () => {
+    try {
+      const response = await API.get('/posts');
+      if (response.data && response.data.length > 0) {
+        setPosts(prev => {
+          const incomingUserGenerated = response.data.map(p => ({ ...p, isUserGenerated: true }));
+          const combined = [...incomingUserGenerated, ...prev];
+          const uniqueMap = new Map();
+          combined.forEach(post => {
+            if (post._id && !uniqueMap.has(post._id)) {
+              uniqueMap.set(post._id, post);
+            }
+          });
+          return Array.from(uniqueMap.values());
+        });
+      }
+    } catch (err) {
+      console.log("Database connection idle. Rendering operational cached layers.");
+    }
+  };
   useEffect(() => {
     const isFirstLoad = !sessionStorage.getItem('initialized');
     
