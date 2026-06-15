@@ -109,8 +109,7 @@ function App() {
   const [coverImageUrl, setCoverImageUrl] = useState('');
   const [inlineImageUrl, setInlineImageUrl] = useState('');
 
-  const navigate = useNavigate(); // Ensure you have this declared at the top of your App function
-
+ 
   // Handle Session Initialization & Forced Redirect
   useEffect(() => {
     const isFirstLoad = !sessionStorage.getItem('initialized');
