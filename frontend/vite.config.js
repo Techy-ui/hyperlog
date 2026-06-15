@@ -6,5 +6,7 @@ export default defineConfig({
   base: '/hyperlog/', 
   build: {
     sourcemap : true,
+    outDir: 'dist',
+    assetsDir: 'assets',
   },
 })
