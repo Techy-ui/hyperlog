@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 
 function App() {
+
+  const [isReady, setIsReady] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -119,15 +121,17 @@ function App() {
       localStorage.removeItem('user');
       setCurrentUser(null);
       sessionStorage.setItem('initialized', 'true');
-      
-      // Use an empty string or '/' for HashRouter
       navigate('/', { replace: true });
     } else {
-      // ...
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) setCurrentUser(JSON.parse(savedUser));
     }
+    
+    fetchLiveDbData();
     setIsReady(true);
   }, [navigate]);
 
+  if (!isReady) return null;
   // Deduplication engine strips out repeating DB responses seamlessly
   const fetchLiveDbData = async () => {
     try {
