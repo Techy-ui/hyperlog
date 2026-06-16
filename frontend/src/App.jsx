@@ -527,17 +527,17 @@ function App() {
                       <input type="email" value={authEmail} onChange={(e)=>setAuthEmail(e.target.value)} placeholder="dev@hyperlog.net" className={`w-full border rounded-lg p-2.5 text-white focus:outline-none focus:border-cyan-500 ${darkMode ? 'bg-[#0d1117] border-gray-800' : 'bg-slate-50 border-slate-300 text-slate-900'}`} required />
                     </div>
                     <div>
-                      <label className="block mb-1 text-gray-400 text-[11px] uppercase">Access Cipher Secret</label>
+                      <label className="block mb-1 text-gray-400 text-[11px] uppercase">Access Password</label>
                       <input type="password" value={authPassword} onChange={(e)=>setAuthPassword(e.target.value)} placeholder="••••••••" className={`w-full border rounded-lg p-2.5 text-white focus:outline-none focus:border-cyan-500 ${darkMode ? 'bg-[#0d1117] border-gray-800' : 'bg-slate-50 border-slate-300 text-slate-900'}`} required />
                     </div>
 
                     <button type="submit" className="w-full mt-2 py-2.5 bg-cyan-500 text-black font-black uppercase tracking-wider rounded-lg hover:bg-cyan-400 transition cursor-pointer text-xs">
-                      {isRegisterMode ? 'COMPILE_NEW_USER' : 'MOUNT_SESSION_TOKEN'}
+                      {isRegisterMode ? 'COMPILE_NEW_USER' : 'LOGIN_USER'}
                     </button>
 
                     <div className="text-center pt-2.5 border-t border-gray-800/40 mt-3">
                       <button type="button" onClick={() => { setIsRegisterMode(!isRegisterMode); setAuthError(''); }} className="text-[10px] text-gray-500 hover:text-cyan-400 underline cursor-pointer">
-                        {isRegisterMode ? 'Return directly to operator login' : 'Configure entirely new network profile'}
+                        {isRegisterMode ? 'Return directly to operator login' : 'Register new network profile'}
                       </button>
                     </div>
                   </form>
