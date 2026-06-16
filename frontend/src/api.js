@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Centralized configuration pointing to your Node backend
 const API = axios.create({
-    baseURL: 'http://localhost:5000/api'
+    baseURL: 'https://hyperlog-jjsu.onrender.com'
 });
 
 // Automatically intercept every request and inject the auth token if available
